@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  minio:
+    image: cgr.dev/chainguard/minio:latest
+    container_name: minio_server
+    user: root
+    env_file:
+      - ./.env
+    ports:
+      - "9000:9000"       # Porta da API do MinIO
+      - "9001:9001"       # Porta da Interface Web (Console)
+    environment:
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/challenge_data
+    command: server /challenge_data --console-address ":9001"
+
+volumes:
+  minio_data:
+    driver: local
