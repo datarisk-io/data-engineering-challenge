@@ -25,7 +25,7 @@ s3_client = boto3.client(
 )
 
 #Defining Medallion Architecture layers:
-layers = ["landing", "raw","trusted","refined"]
+layers = ["raw","trusted","refined"]
 
 def create_data_lake():
     logger.info("Creating data lake structure in MinIO...")
